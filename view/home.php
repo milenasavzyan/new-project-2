@@ -36,10 +36,15 @@
     </table>
 
 
+    <div>
+        <?php for ($i = 1; $i <= $totalPages; $i++):?>
+            <a href="../public/index.php?route=home&page=<?= $i ?>" <?= $i == $page ? : '' ?>>
+                <?= $i ?>
+            </a>
+        <?php endfor; ?>
+    </div>
     <form method="post">
-        <a href="../public/index.php?route=create">Create
-<!--            <button type="submit" name="submit" class="submit">Create</button>-->
-        </a>
+        <a href="../public/index.php?route=create">Create</a>
     </form>
 
 </div>
