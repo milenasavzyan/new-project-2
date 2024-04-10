@@ -45,4 +45,36 @@ class ArticlesModel
             echo 'Error: ' . $e->getMessage();
         }
     }
+    public function getLimit($page, $articlesPerPage)
+    {
+        $pdo = Database::getInstance()->getConnection();
+        $offset = ($page - 1) * $articlesPerPage;
+        try {
+            $stmt = $pdo->prepare('SELECT * FROM articles LIMIT :limit OFFSET :offset');
+            $stmt->bindValue(':limit', $articlesPerPage, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $articles;
+
+
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+    public function getArticlesCount()
+    {
+        $pdo = Database::getInstance()->getConnection();
+        try {
+            $stmt = $pdo->prepare('SELECT COUNT(*) FROM articles');
+            $stmt->execute();
+            $totalArticles = $stmt->fetchColumn();
+            return $totalArticles;
+
+
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
 }

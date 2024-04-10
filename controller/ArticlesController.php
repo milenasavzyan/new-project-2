@@ -4,21 +4,13 @@ class ArticlesController
 {
     public function displayArticles()
     {
-        $pdo = Database::getInstance()->pdo;
+        $articlesModel = new ArticlesModel();
         $page = $_GET['page'] ?? 1;
         $articlesPerPage = 7;
-        $offset = ($page - 1) * $articlesPerPage;
 
 
-        $stmt = $pdo->prepare('SELECT * FROM articles LIMIT :limit OFFSET :offset');
-        $stmt->bindValue(':limit', $articlesPerPage, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-        $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $stmt = $pdo->prepare('SELECT COUNT(*) FROM articles');
-        $stmt->execute();
-        $totalArticles = $stmt->fetchColumn();
+        $articles = $articlesModel->getLimit($page, $articlesPerPage);
+        $totalArticles = $articlesModel->getArticlesCount();
 
         $totalPages = ceil($totalArticles / $articlesPerPage);
 
