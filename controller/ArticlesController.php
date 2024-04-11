@@ -9,7 +9,7 @@ class ArticlesController
         $articlesPerPage = 7;
 
 
-        $articles = $articlesModel->getLimit($page, $articlesPerPage);
+        $articles = $articlesModel->getArticles($page, $articlesPerPage);
         $totalArticles = $articlesModel->getArticlesCount();
 
         $totalPages = ceil($totalArticles / $articlesPerPage);

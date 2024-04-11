@@ -45,7 +45,7 @@ class ArticlesModel
             echo 'Error: ' . $e->getMessage();
         }
     }
-    public function getLimit($page, $articlesPerPage)
+    public function getArticles($page, $articlesPerPage)
     {
         $pdo = Database::getInstance()->getConnection();
         $offset = ($page - 1) * $articlesPerPage;
